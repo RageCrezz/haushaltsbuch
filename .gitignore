@@ -15,6 +15,9 @@
 
 # next.js
 /.next/
+/.next-runtime/
+/.next-app/
+/.next-work/
 /out/
 
 # production

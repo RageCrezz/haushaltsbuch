@@ -1,9 +1,20 @@
-export default function Home() {
+import { redirect } from "next/navigation";
+import { AuthForm } from "@/components/auth-form";
+import { requireUser } from "@/lib/auth";
+
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ registered?: string | string[] }>;
+}) {
+  const user = await requireUser();
+  const params = await searchParams;
+
+  if (user) {
+    redirect("/dashboard");
+  }
+
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
-      <main>
-        <p className="text-3xl text-white">Hello world</p>
-      </main>
-    </div>
+    <AuthForm mode="login" registrationSuccess={params.registered === "1"} />
   );
 }

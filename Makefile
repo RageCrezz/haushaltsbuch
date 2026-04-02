@@ -26,10 +26,10 @@ else
 endif
 
 stop:
-	docker stop kuzu-app
+	docker stop app
 
 logs:
-	docker logs -f kuzu-app
+	docker logs -f app
 
 bash:
-	docker exec -it kuzu-app sh
+	docker exec -it app sh

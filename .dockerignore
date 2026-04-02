@@ -1,0 +1,17 @@
+node_modules
+.next
+.next-app
+.next-runtime
+.next-work
+.git
+.gitignore
+.codex
+coverage
+dist
+build
+out
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store
+.DS_Store

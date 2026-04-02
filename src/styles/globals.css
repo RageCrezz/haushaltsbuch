@@ -3,17 +3,80 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-nunito);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), sans-serif;
 }
 
 :root {
-  --background: #20242B;
-  --foreground: white;
+  --background: #fff0f0;
+  --foreground: #1d1e1f;
+  --primary: #f26474;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input.input-field {
+  border: 1px solid #f26474;
+  border-radius: .5rem;
+  padding: 6px 12px;
+}
+
+.shadow-cute {
+  box-shadow: 0 8px 24px -16px rgba(0, 0, 0, .1);
+}
+
+.card {
+  padding: 12px;
+  background: #f26474;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+}
+
+.button-primary {
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: #f26474;
+  color: white;
+  cursor: pointer;
+}
+
+.button-primary:hover {
+  opacity: 75%;
+}
+
+.button-secondary {
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: white;
+  color: #f26474;
+  border: 1px solid #f26474;
+  cursor: pointer;
+}
+
+.button-secondary:hover {
+  opacity: 75%;
+}
+
+@theme {
+  --color-primary: #f26474;
 }
