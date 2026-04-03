@@ -3,6 +3,7 @@ FROM node:22-alpine AS dev
 WORKDIR /app
 
 RUN apk add --no-cache bash libc6-compat openssl
+ENV CYPRESS_INSTALL_BINARY=0
 COPY package.json package-lock.json ./
 
 RUN npm ci

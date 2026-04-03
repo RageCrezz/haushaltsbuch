@@ -29,6 +29,10 @@ export function verifyPassword(password: string, storedHash: string) {
   return timingSafeEqual(computedKey, storedKey);
 }
 
+export function createEmailVerificationToken() {
+  return randomBytes(32).toString("hex");
+}
+
 export const authSecret =
   process.env.NEXTAUTH_SECRET ??
   process.env.AUTH_SECRET ??
@@ -48,9 +52,9 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        username: {
-          label: "Benutzername",
-          type: "text",
+        email: {
+          label: "E-Mail-Adresse",
+          type: "email",
         },
         password: {
           label: "Passwort",
@@ -58,20 +62,24 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        const username = String(credentials?.username ?? "");
+        const email = String(credentials?.email ?? "").trim().toLowerCase();
         const password = String(credentials?.password ?? "");
 
         const user = await prisma.user.findUnique({
-          where: { username },
+          where: { email },
         });
 
-        if (!user || !verifyPassword(password, user.passwordHash)) {
+        if (
+          !user ||
+          !user.emailVerifiedAt ||
+          !verifyPassword(password, user.passwordHash)
+        ) {
           return null;
         }
 
         return {
           id: user.id,
-          name: user.username,
+          name: user.name,
         };
       },
     }),

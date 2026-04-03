@@ -16,9 +16,15 @@ services:
     environment:
       NODE_ENV: development
       DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}"
+      MAIL_HOST: mailpit
+      MAIL_PORT: "1025"
+      MAIL_FROM: "haushaltsbuch@local.test"
+      CYPRESS_INSTALL_BINARY: "0"
     depends_on:
       db:
         condition: service_healthy
+      mailpit:
+        condition: service_started
     networks:
       - kuzu-network
 
@@ -41,6 +47,16 @@ services:
       - pgdata:/var/lib/postgresql/data
     networks:
       - kuzu-network
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit
+    restart: always
+    networks:
+      - kuzu-network
+    ports:
+      - "8026:8025"
+      - "1026:1025"
 
 volumes:
   pgdata:

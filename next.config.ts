@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  distDir: ".next-runtime",
+  distDir: process.env.NEXT_DIST_DIR ?? ".next-runtime",
 };
 
 export default nextConfig;

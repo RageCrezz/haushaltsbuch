@@ -11,7 +11,7 @@ export async function GET() {
   }
 
   return Response.json({
-    username: user.username,
+    name: user.name,
     salaryCents: user.salaryCents,
   });
 }
@@ -24,13 +24,13 @@ export async function PATCH(request: Request) {
   }
 
   const body = await request.json().catch(() => null) as
-    | { username?: string; salaryCents?: number }
+    | { name?: string; salaryCents?: number }
     | null;
 
-  const username = body?.username?.trim() ?? "";
+  const name = body?.name?.trim() ?? "";
   const salaryCents = body?.salaryCents;
 
-  if (!username) {
+  if (!name) {
     return jsonError("Bitte einen gültigen Namen angeben.");
   }
 
@@ -38,25 +38,11 @@ export async function PATCH(request: Request) {
     return jsonError("Bitte ein gültiges Gehalt in Cent angeben.");
   }
 
-  const existingUser = await prisma.user.findFirst({
-    where: {
-      username,
-      id: {
-        not: user.id,
-      },
-    },
-    select: { id: true },
-  });
-
-  if (existingUser) {
-    return jsonError("Dieser Benutzername ist bereits vergeben.");
-  }
-
   const updatedUser = await prisma.user.update({
     where: { id: user.id },
-    data: { username, salaryCents },
+    data: { name, salaryCents },
     select: {
-      username: true,
+      name: true,
       salaryCents: true,
     },
   });

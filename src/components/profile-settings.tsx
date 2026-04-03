@@ -12,7 +12,7 @@ import {
 } from "@/lib/money";
 
 type ProfileSettingsProps = {
-  username: string;
+  name: string;
   initialSalaryCents: number;
   initialFixedCosts: FixedCostDto[];
 };
@@ -36,12 +36,12 @@ function mapFixedCostItem(item: FixedCostDto): FixedCostFormItem {
 }
 
 export function ProfileSettings({
-  username: initialUsername,
+  name: initialName,
   initialSalaryCents,
   initialFixedCosts,
 }: ProfileSettingsProps) {
   const { update } = useSession();
-  const [username, setUsername] = useState(initialUsername);
+  const [name, setName] = useState(initialName);
   const [salaryInput, setSalaryInput] = useState(String(initialSalaryCents));
   const [fixedCosts, setFixedCosts] = useState(
     initialFixedCosts.map(mapFixedCostItem),
@@ -217,10 +217,10 @@ export function ProfileSettings({
     setError("");
     setModalError("");
 
-    const trimmedUsername = username.trim();
+    const trimmedName = name.trim();
     const salaryCents = digitsToCents(salaryInput);
 
-    if (!trimmedUsername) {
+    if (!trimmedName) {
       setError("Bitte einen gültigen Namen angeben.");
       return;
     }
@@ -238,14 +238,14 @@ export function ProfileSettings({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: trimmedUsername,
+        name: trimmedName,
         salaryCents,
       }),
     });
 
     const profilePayload = (await profileResponse.json().catch(() => null)) as {
       error?: string;
-      username?: string;
+      name?: string;
       salaryCents?: number;
     } | null;
 
@@ -256,7 +256,7 @@ export function ProfileSettings({
       setIsSaving(false);
       return;
     }
-    await update({ name: trimmedUsername });
+    await update({ name: trimmedName });
     window.location.reload();
   }
 
@@ -268,8 +268,9 @@ export function ProfileSettings({
             <label className="text-sm font-semibold text-primary">Name</label>
             <input
               className="input-field bg-white"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
+              data-testid="profile-name-input"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
               placeholder="Name"
             />
           </div>
@@ -278,6 +279,7 @@ export function ProfileSettings({
             <label className="text-sm font-semibold text-primary">Gehalt</label>
             <input
               className="input-field bg-white"
+              data-testid="profile-salary-input"
               inputMode="numeric"
               value={formatCurrencyInput(digitsToCents(salaryInput))}
               onKeyDown={handleSalaryKeyDown}
@@ -378,6 +380,7 @@ export function ProfileSettings({
             <button
               className="button-secondary"
               type="button"
+              data-testid="profile-add-fixed-cost"
               onClick={openModal}
             >
               + weitere hinzufügen
@@ -395,6 +398,7 @@ export function ProfileSettings({
           <button
             className="button-primary"
             type="button"
+            data-testid="profile-save"
             onClick={() => void handleSave()}
           >
             {isSaving ? "Speichert..." : "Speichern"}

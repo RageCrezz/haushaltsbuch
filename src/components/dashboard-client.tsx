@@ -90,9 +90,9 @@ export function DashboardClient({ data }: { data: DashboardData }) {
               dashboardData.totalFixedCostsCents,
               Math.max(dashboardData.remainingBudgetCents, 0),
             ],
-            backgroundColor: ["#f7a7b2", "#f26474", "#f9c5cc", "#ffd8de"],
-            borderColor: "#fff0f0",
-            borderWidth: 3,
+            backgroundColor: ["#f7a7b2", "#ef6d7c", "#f9c5cc", "#f26474"],
+            borderColor: "#000",
+            borderWidth: 1,
           },
         ],
       } satisfies ChartData<"doughnut">,
@@ -102,16 +102,16 @@ export function DashboardClient({ data }: { data: DashboardData }) {
     const incomeChart = new Chart(incomeChartRef.current, {
       type: "doughnut",
       data: {
-        labels: ["Salary", "Erspartes"],
+        labels: ["Erspartes", "Salary"],
         datasets: [
           {
             data: [
-              dashboardData.salaryCents,
               Math.max(dashboardData.remainingBudgetCents, 0),
+              dashboardData.salaryCents,
             ],
             backgroundColor: ["#f26474", "#f9c5cc"],
-            borderColor: "#fff0f0",
-            borderWidth: 3,
+            borderColor: "#000",
+            borderWidth: 1,
           },
         ],
       } satisfies ChartData<"doughnut">,
@@ -274,7 +274,7 @@ export function DashboardClient({ data }: { data: DashboardData }) {
         </div>
 
         <div className="flex flex-col gap-6 lg:flex-row">
-          <section className="card shadow-cute w-full gap-y-6 border border-primary/10 bg-white p-6 text-foreground lg:w-1/2 text-white">
+          <section className="shadow-cute w-full gap-y-6 border border-primary/10 bg-white p-6 text-foreground lg:w-1/2 text-primary rounded-2xl">
             <h2 className="text-2xl font-semibold">
               Einnahmen, Ausgaben & Restbudget
             </h2>
@@ -283,7 +283,7 @@ export function DashboardClient({ data }: { data: DashboardData }) {
             </div>
           </section>
 
-          <section className="card shadow-cute w-full gap-y-6 border border-primary/10 bg-white p-6 text-foreground lg:w-1/2 text-white">
+          <section className="shadow-cute w-full gap-y-6 border border-primary/10 bg-white p-6 text-foreground lg:w-1/2 text-primary rounded-2xl">
             <h2 className="text-2xl font-semibold">Gehalt & Erspartes</h2>
             <div className="h-[240px] w-full max-w-[420px]">
               <canvas ref={incomeChartRef} />
@@ -295,6 +295,7 @@ export function DashboardClient({ data }: { data: DashboardData }) {
           <button
             className="button-primary"
             type="button"
+            data-testid="dashboard-add-income"
             onClick={() => {
               setModalMode("INCOME");
               setNameInput("");
@@ -307,6 +308,7 @@ export function DashboardClient({ data }: { data: DashboardData }) {
           <button
             className="button-primary"
             type="button"
+            data-testid="dashboard-add-expense"
             onClick={() => {
               setModalMode("EXPENSE");
               setNameInput("");

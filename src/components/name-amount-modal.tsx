@@ -65,6 +65,7 @@ export function NameAmountModal({
             </span>
             <input
               className="input-field text-lg"
+              data-testid="modal-name-input"
               value={nameInput}
               onChange={(event) => onNameChange(event.target.value)}
               placeholder={namePlaceholder}
@@ -78,6 +79,7 @@ export function NameAmountModal({
             </span>
             <input
               className="input-field text-lg"
+              data-testid="modal-amount-input"
               inputMode="numeric"
               value={formatCurrencyInput(digitsToCents(amountInput))}
               onChange={(event) =>
@@ -105,6 +107,7 @@ export function NameAmountModal({
             <button
               className="button-primary"
               type="submit"
+              data-testid="modal-submit"
               disabled={
                 isPending ||
                 !nameInput.trim() ||

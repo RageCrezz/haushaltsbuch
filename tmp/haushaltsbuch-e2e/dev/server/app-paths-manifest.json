@@ -1,0 +1,11 @@
+{
+  "/(authenticated)/dashboard/page": "app/(authenticated)/dashboard/page.js",
+  "/(authenticated)/profil/page": "app/(authenticated)/profil/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/api/expenses/route": "app/api/expenses/route.js",
+  "/api/fixed-costs/route": "app/api/fixed-costs/route.js",
+  "/api/profile/route": "app/api/profile/route.js",
+  "/api/test/setup/route": "app/api/test/setup/route.js",
+  "/page": "app/page.js",
+  "/register/page": "app/register/page.js"
+}

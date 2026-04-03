@@ -34,7 +34,9 @@
     "**/*.tsx",
     "**/*.mts",
     ".next-runtime/types/**/*.ts",
-    ".next-runtime/dev/types/**/*.ts"
+    ".next-runtime/dev/types/**/*.ts",
+    "/tmp/haushaltsbuch-e2e/types/**/*.ts",
+    "/tmp/haushaltsbuch-e2e/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

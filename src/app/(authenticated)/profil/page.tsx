@@ -8,7 +8,7 @@ export default async function ProfilePage() {
 
   return (
     <ProfileSettings
-      username={user.username}
+      name={user.name}
       initialSalaryCents={user.salaryCents}
       initialFixedCosts={data.fixedCosts}
     />
